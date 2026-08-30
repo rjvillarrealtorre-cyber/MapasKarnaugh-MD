@@ -68,7 +68,15 @@ namespace ProyectoMD {
 
 		Label^ lbl_maxterminos;
 		TextBox^ txt_maxterminos;
-		Button^ btn_cargarMaxterminos;
+
+		Button^ btn_tabla;
+		DataGridView^ dgv_karnaugh;
+		Label^ lbl_cabeceraKarnaugh;
+
+	private: System::Windows::Forms::Label^ lb_titulodos;
+	private: System::Windows::Forms::Label^ linea;
+
+		   Button^ btn_cargarMaxterminos;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -85,6 +93,8 @@ namespace ProyectoMD {
 			this->cb_forma = (gcnew System::Windows::Forms::ComboBox());
 			this->gb_ingreso = (gcnew System::Windows::Forms::GroupBox());
 			this->rb_dos = (gcnew System::Windows::Forms::RadioButton());
+			this->lb_titulodos = (gcnew System::Windows::Forms::Label());
+			this->linea = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// lbl_titulo
@@ -94,9 +104,9 @@ namespace ProyectoMD {
 				static_cast<System::Byte>(0)));
 			this->lbl_titulo->Location = System::Drawing::Point(50, 18);
 			this->lbl_titulo->Name = L"lbl_titulo";
-			this->lbl_titulo->Size = System::Drawing::Size(245, 29);
+			this->lbl_titulo->Size = System::Drawing::Size(209, 29);
 			this->lbl_titulo->TabIndex = 0;
-			this->lbl_titulo->Text = L"Mapas de Karnaugh";
+			this->lbl_titulo->Text = L"Ingreso de datos";
 			// 
 			// lbl_numterm
 			// 
@@ -186,11 +196,33 @@ namespace ProyectoMD {
 			this->rb_dos->UseVisualStyleBackColor = true;
 			this->rb_dos->CheckedChanged += gcnew System::EventHandler(this, &MyForm::rb_dos_CheckedChanged);
 			// 
+			// lb_titulodos
+			// 
+			this->lb_titulodos->AutoSize = true;
+			this->lb_titulodos->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lb_titulodos->Location = System::Drawing::Point(491, 18);
+			this->lb_titulodos->Name = L"lb_titulodos";
+			this->lb_titulodos->Size = System::Drawing::Size(232, 29);
+			this->lb_titulodos->TabIndex = 8;
+			this->lb_titulodos->Text = L"Mapa de Karnaugh";
+			// 
+			// linea
+			// 
+			this->linea->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
+			this->linea->Location = System::Drawing::Point(469, 21);
+			this->linea->Name = L"linea";
+			this->linea->Size = System::Drawing::Size(1, 532);
+			this->linea->TabIndex = 9;
+			this->linea->Text = L" ";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1024, 576);
+			this->Controls->Add(this->linea);
+			this->Controls->Add(this->lb_titulodos);
 			this->Controls->Add(this->gb_ingreso);
 			this->Controls->Add(this->cb_forma);
 			this->Controls->Add(this->lbl_forma);
@@ -225,6 +257,8 @@ namespace ProyectoMD {
 		if (lbl_maxterminos != nullptr) lbl_maxterminos->Visible = false;
 		if (txt_maxterminos != nullptr) txt_maxterminos->Visible = false;
 		if (btn_cargarMaxterminos != nullptr) btn_cargarMaxterminos->Visible = false;
+
+		if (btn_tabla != nullptr) btn_tabla->Visible = false;
 	}
 	private: void mostrarIngresoMinterminos() {
 		if (lbl_minterminos == nullptr) {
@@ -264,7 +298,7 @@ namespace ProyectoMD {
 		txt_minterminos->BringToFront();
 		btn_cargarMinterminos->BringToFront();
 	}
-	private: void MostrarIngresoMaxterminos() {
+	private: void mostrarIngresoMaxterminos() {
 		if (lbl_maxterminos == nullptr) {
 			lbl_maxterminos = gcnew System::Windows::Forms::Label();
 			lbl_maxterminos->Location = System::Drawing::Point(80, 180);
@@ -330,8 +364,8 @@ namespace ProyectoMD {
 			btn_cargarExpresion->Location = System::Drawing::Point(310, 213);
 			btn_cargarExpresion->Size = System::Drawing::Size(90, 28);
 			btn_cargarExpresion->Text = "Cargar";
-			btn_cargarExpresion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
+			btn_cargarExpresion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			btn_cargarExpresion->Click += gcnew System::EventHandler(this, &MyForm::btn_cargarExpresion_Click);
 			Controls->Add(btn_cargarExpresion);
 		}
 
@@ -343,6 +377,9 @@ namespace ProyectoMD {
 		lbl_expresion->BringToFront();
 		txt_expresion->BringToFront();
 		btn_cargarExpresion->BringToFront();
+	}
+	private: System::Void btn_tabla_Click(System::Object^ sender, System::EventArgs^ e) {
+		construirKarnaughDesdeTabla();
 	}
 	private: void generarTabla() {
 		if (dgv_tabla == nullptr) {
@@ -395,24 +432,288 @@ namespace ProyectoMD {
 
 			// valor por defecto
 			dgv_tabla->Rows[index]->Cells[numeroTerminos]->Value = "0";
+
+			// btn
+			if (btn_tabla == nullptr) {
+				btn_tabla = gcnew Button();
+				btn_tabla->Location = System::Drawing::Point(80, 440);
+				btn_tabla->Size = System::Drawing::Size(340, 35);
+				btn_tabla->Text = "Generar Mapa de Karnaugh";
+				btn_tabla->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular));
+				btn_tabla->Click += gcnew System::EventHandler(this, &MyForm::btn_tabla_Click);
+				Controls->Add(btn_tabla);
+			}
+			btn_tabla->Visible = true;
+			btn_tabla->BringToFront();
 		}
 	}
+
+	private: System::Void btn_cargarExpresion_Click(System::Object^ sender, System::EventArgs^ e) {
+		construirKarnaughDesdeExpresion();
+	}
+	//sufrimiento
+	private: void construirKarnaughDesdeTabla() {
+		if (dgv_tabla == nullptr || numeroTerminos < 2) return;
+
+		if (dgv_karnaugh == nullptr) {
+			dgv_karnaugh = gcnew DataGridView();
+			dgv_karnaugh->Location = System::Drawing::Point(510, 100);
+			dgv_karnaugh->Size = System::Drawing::Size(440, 260);
+			dgv_karnaugh->AllowUserToAddRows = false;
+			dgv_karnaugh->AllowUserToDeleteRows = false;
+			dgv_karnaugh->AllowUserToResizeRows = false;
+			dgv_karnaugh->AllowUserToResizeColumns = false;
+			dgv_karnaugh->ReadOnly = true;
+			dgv_karnaugh->RowHeadersVisible = true;
+			dgv_karnaugh->RowHeadersWidth = 80;
+			dgv_karnaugh->DefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleCenter;
+			dgv_karnaugh->ColumnHeadersDefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleCenter;
+			dgv_karnaugh->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular));
+			Controls->Add(dgv_karnaugh);
+		}
+
+		if (lbl_cabeceraKarnaugh == nullptr) {
+			lbl_cabeceraKarnaugh = gcnew Label();
+			lbl_cabeceraKarnaugh->Location = System::Drawing::Point(510, 65);
+			lbl_cabeceraKarnaugh->Size = System::Drawing::Size(440, 30);
+			lbl_cabeceraKarnaugh->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular));
+			Controls->Add(lbl_cabeceraKarnaugh);
+		}
+
+		dgv_karnaugh->Columns->Clear();
+		dgv_karnaugh->Rows->Clear();
+		dgv_karnaugh->Visible = true;
+		lbl_cabeceraKarnaugh->Visible = true;
+
+		int totalCasillas = (int)Math::Pow(2, numeroTerminos);
+		array<int>^ valoresF = gcnew array<int>(totalCasillas);
+
+		for (int i = 0; i < totalCasillas; i++) {
+			Object^ val = dgv_tabla->Rows[i]->Cells[numeroTerminos]->Value;
+			valoresF[i] = (val != nullptr && val->ToString()->Trim() == "1") ? 1 : 0;
+		}
+
+		if (numeroTerminos == 2) {
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: B";
+			dgv_karnaugh->Columns->Add("B0", "B = 0");
+			dgv_karnaugh->Columns->Add("B1", "B = 1");
+
+			array<array<int>^>^ mapa2 = {
+				gcnew array<int>{ 0, 1 }, // A = 0
+				gcnew array<int>{ 2, 3 }  // A = 1
+			};
+			array<String^>^ encabezadosFila = { "A = 0", "A = 1" };
+
+			for (int r = 0; r < 2; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezadosFila[r];
+				for (int c = 0; c < 2; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa2[r][c]].ToString();
+				}
+			}
+		}
+		else if (numeroTerminos == 3) {
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (Código Gray)";
+			array<String^>^ cols = { "00", "01", "11", "10" };
+			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
+
+			array<array<int>^>^ mapa3 = {
+				gcnew array<int>{ 0, 1, 3, 2 }, // A = 0
+				gcnew array<int>{ 4, 5, 7, 6 }  // A = 1
+			};
+			array<String^>^ encabezadosFila = { "A = 0", "A = 1" };
+
+			for (int r = 0; r < 2; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezadosFila[r];
+				for (int c = 0; c < 4; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa3[r][c]].ToString();
+				}
+			}
+		}
+		else if (numeroTerminos == 4) {
+			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (Código Gray)";
+			array<String^>^ cols = { "00", "01", "11", "10" };
+			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
+
+			array<array<int>^>^ mapa4 = {
+				gcnew array<int>{  0,  1,  3,  2 }, // AB = 00
+				gcnew array<int>{  4,  5,  7,  6 }, // AB = 01
+				gcnew array<int>{ 12, 13, 15, 14 }, // AB = 11
+				gcnew array<int>{  8,  9, 11, 10 }  // AB = 10
+			};
+			array<String^>^ encabezadosFila = { "00", "01", "11", "10" };
+
+			for (int r = 0; r < 4; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezadosFila[r];
+				for (int c = 0; c < 4; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa4[r][c]].ToString();
+				}
+			}
+		}
+
+		dgv_karnaugh->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
+		dgv_karnaugh->BringToFront();
+		lbl_cabeceraKarnaugh->BringToFront();
+	}
+
+	private: bool casillaCumpleTermino(int indiceCasilla, int numVars, String^ termino) {
+		array<String^>^ vars = { "A", "B", "C", "D" };
+
+		for (int v = 0; v < numVars; v++) {
+			String^ nombreVar = vars[v];
+			// transforma el número de la casilla a la base dos
+			int bit = (indiceCasilla >> (numVars - 1 - v)) & 1;
+
+			// 1. Si el término pide la variable negada (ej. A' o !A)
+			if (termino->Contains(nombreVar + "'") || termino->Contains("!" + nombreVar)) {
+				if (bit != 0) return false; // Si en la casilla no es 0, no cumple
+			}
+			// 2. Si el término pide la variable afirmada (ej. A)
+			else if (termino->Contains(nombreVar)) {
+				if (bit != 1) return false; // Si en la casilla no es 1, no cumple
+			}
+			// 3. Si no contiene la variable, se ignora (no impone condición)
+		}
+
+		return true; // Cumplió todas las condiciones del término
+	}
+
+	private: void construirKarnaughDesdeExpresion() {
+		if (txt_expresion == nullptr || String::IsNullOrWhiteSpace(txt_expresion->Text) || numeroTerminos < 2) return;
+
+		// 1. Limpieza del texto ingresado
+		String^ expr = txt_expresion->Text->Replace(" ", "")->ToUpper();
+		array<String^>^ terminos = expr->Split('+');
+
+		// 2. Evaluar cada casilla (del 0 al 2^n - 1)
+		int totalCasillas = (int)Math::Pow(2, numeroTerminos);
+		array<int>^ valoresF = gcnew array<int>(totalCasillas);
+
+		for (int i = 0; i < totalCasillas; i++) {
+			valoresF[i] = 0; // Por defecto 0
+			for each (String ^ term in terminos) {
+				if (term->Trim()->Length > 0 && casillaCumpleTermino(i, numeroTerminos, term->Trim())) {
+					valoresF[i] = 1; // Si cumple al menos un término, vale 1
+					break;
+				}
+			}
+		}
+
+		// 3. Configurar dgv_karnaugh si aún no fue creado
+		if (dgv_karnaugh == nullptr) {
+			dgv_karnaugh = gcnew DataGridView();
+			dgv_karnaugh->Location = System::Drawing::Point(510, 180);
+			dgv_karnaugh->Size = System::Drawing::Size(440, 260);
+			dgv_karnaugh->AllowUserToAddRows = false;
+			dgv_karnaugh->AllowUserToDeleteRows = false;
+			dgv_karnaugh->AllowUserToResizeRows = false;
+			dgv_karnaugh->AllowUserToResizeColumns = false;
+			dgv_karnaugh->ReadOnly = true;
+			dgv_karnaugh->RowHeadersVisible = true;
+			dgv_karnaugh->RowHeadersWidth = 80;
+			dgv_karnaugh->DefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleCenter;
+			dgv_karnaugh->ColumnHeadersDefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleCenter;
+			dgv_karnaugh->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular));
+			Controls->Add(dgv_karnaugh);
+		}
+
+		if (lbl_cabeceraKarnaugh == nullptr) {
+			lbl_cabeceraKarnaugh = gcnew Label();
+			lbl_cabeceraKarnaugh->Location = System::Drawing::Point(510, 145);
+			lbl_cabeceraKarnaugh->Size = System::Drawing::Size(440, 30);
+			lbl_cabeceraKarnaugh->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular));
+			Controls->Add(lbl_cabeceraKarnaugh);
+		}
+
+		dgv_karnaugh->Columns->Clear();
+		dgv_karnaugh->Rows->Clear();
+		dgv_karnaugh->Visible = true;
+		lbl_cabeceraKarnaugh->Visible = true;
+
+		// 4. Ubicar los valores en la cuadrícula de Karnaugh (código Gray)
+		if (numeroTerminos == 2) {
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: B";
+			dgv_karnaugh->Columns->Add("B0", "B = 0");
+			dgv_karnaugh->Columns->Add("B1", "B = 1");
+
+			array<array<int>^>^ mapa2 = {
+				gcnew array<int>{ 0, 1 },
+				gcnew array<int>{ 2, 3 }
+			};
+			array<String^>^ encabezados = { "A = 0", "A = 1" };
+
+			for (int r = 0; r < 2; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezados[r];
+				for (int c = 0; c < 2; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa2[r][c]].ToString();
+				}
+			}
+		}
+		else if (numeroTerminos == 3) {
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (Código Gray)";
+			array<String^>^ cols = { "00", "01", "11", "10" };
+			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
+
+			array<array<int>^>^ mapa3 = {
+				gcnew array<int>{ 0, 1, 3, 2 },
+				gcnew array<int>{ 4, 5, 7, 6 }
+			};
+			array<String^>^ encabezados = { "A = 0", "A = 1" };
+
+			for (int r = 0; r < 2; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezados[r];
+				for (int c = 0; c < 4; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa3[r][c]].ToString();
+				}
+			}
+		}
+		else if (numeroTerminos == 4) {
+			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (Código Gray)";
+			array<String^>^ cols = { "00", "01", "11", "10" };
+			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
+
+			array<array<int>^>^ mapa4 = {
+				gcnew array<int>{  0,  1,  3,  2 },
+				gcnew array<int>{  4,  5,  7,  6 },
+				gcnew array<int>{ 12, 13, 15, 14 },
+				gcnew array<int>{  8,  9, 11, 10 }
+			};
+			array<String^>^ encabezados = { "00", "01", "11", "10" };
+
+			for (int r = 0; r < 4; r++) {
+				int idx = dgv_karnaugh->Rows->Add();
+				dgv_karnaugh->Rows[idx]->HeaderCell->Value = encabezados[r];
+				for (int c = 0; c < 4; c++) {
+					dgv_karnaugh->Rows[idx]->Cells[c]->Value = valoresF[mapa4[r][c]].ToString();
+				}
+			}
+		}
+
+		dgv_karnaugh->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
+		dgv_karnaugh->BringToFront();
+		lbl_cabeceraKarnaugh->BringToFront();
+	}
+
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void rb_dos_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		numeroTerminos = 2;
 		cb_forma->Enabled = true;
-		if (dgv_tabla != nullptr) generarTabla();
+		if (dgv_tabla != nullptr && dgv_tabla->Visible) generarTabla();
 	}
 	private: System::Void rb_tres_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		numeroTerminos = 3;
 		cb_forma->Enabled = true;
-		if (dgv_tabla != nullptr) generarTabla();
+		if (dgv_tabla != nullptr && dgv_tabla->Visible) generarTabla();
 	}
 	private: System::Void rb_cuatro_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		numeroTerminos = 4;
 		cb_forma->Enabled = true;
-		if (dgv_tabla != nullptr) generarTabla();
+		if (dgv_tabla != nullptr && dgv_tabla->Visible) generarTabla();
 	}
 	private: System::Void cb_forma_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (cb_forma->SelectedItem->ToString() == "Expresión Lógica") {
@@ -430,7 +731,7 @@ namespace ProyectoMD {
 		}
 		else if (cb_forma->SelectedItem->ToString() == "Lista de Maxitérminos") {
 			ocultarIngresos();
-			MostrarIngresoMaxterminos();
+			mostrarIngresoMaxterminos();
 		}
 	}
 };
