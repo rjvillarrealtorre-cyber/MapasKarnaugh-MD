@@ -1132,7 +1132,7 @@ namespace ProyectoMD {
 			while (x > 0) { c += x & 1; x >>= 1; }
 			return c;
 		}
-
+			    
 			   // Cubre todos los 1s eligiendo el grupo que más 1s pendientes cubre
 	private: List<int>^ cubrirGrupos(List<int>^ grupos, int unosMascara) {
 		List<int>^ elegidos = gcnew List<int>();
