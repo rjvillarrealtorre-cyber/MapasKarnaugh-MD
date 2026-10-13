@@ -1461,9 +1461,41 @@ namespace ProyectoMD {
 	}
 
 	private: void mostrarResultado(array<int>^ valoresF) {
-		auto elegidos = obtenerGruposElegidos(valoresF);
-		armarExpresion(elegidos);
+		if (lbl_resultado == nullptr) {
+			lbl_resultado = gcnew Label();
+			lbl_resultado->Size = System::Drawing::Size(470, 30);
+			lbl_resultado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold));
+			Controls->Add(lbl_resultado);
+		}
+
+		List<int>^ elegidos = obtenerGruposElegidos(valoresF);
+
+		// texto de la expresión
+		String^ resultado;
+		if (elegidos->Count == 0) {
+			int total = 1 << numeroTerminos;
+			int unos = 0;
+			for (int i = 0; i < total; i++) if (valoresF[i] == 1) unos++;
+			resultado = (unos == 0) ? "0" : "1";
+		}
+		else {
+			resultado = armarExpresion(elegidos);
+		}
+
+		lbl_resultado->Text = "Expresión simplificada:  F = " + resultado;
+
+		// colorear el mapa con las agrupaciones (y dibujar la leyenda)
 		pintarGrupos(elegidos);
+
+		int yFinal;
+		if (elegidos->Count == 0)
+			yFinal = 398;                        // sin grupos: justo bajo el mapa
+		else
+			yFinal = 398 + elegidos->Count * 20 + 10;   // debajo del último renglón de la leyenda
+
+		lbl_resultado->Location = System::Drawing::Point(510, yFinal);
+		lbl_resultado->Visible = true;
+		lbl_resultado->BringToFront();
 	}
 
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
