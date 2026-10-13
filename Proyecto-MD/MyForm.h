@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 #using <System.dll>
 #using <System.Core.dll>
@@ -23,7 +23,7 @@ namespace ProyectoMD {
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar cÛdigo de constructor aquÌ
+			//TODO: agregar c√≥digo de constructor aqu√≠
 			//
 			numeroTerminos = -1;
 			formaIngresoDatos = -1;
@@ -31,7 +31,7 @@ namespace ProyectoMD {
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estÈn usando.
+		/// Limpiar los recursos que se est√©n usando.
 		/// </summary>
 		~MyForm()
 		{
@@ -54,7 +54,7 @@ namespace ProyectoMD {
 	protected:
 	private:
 		/// <summary>
-		/// Variable del diseÒador necesaria.
+		/// Variable del dise√±ador necesaria.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 	private: System::Windows::Forms::RadioButton^ rb_dos;
@@ -78,6 +78,7 @@ namespace ProyectoMD {
 		   Label^ lbl_cabeceraKarnaugh;
 
 		   Label^ lbl_resultado;
+		   List<Label^>^ leyenda;
 
 	private: System::Windows::Forms::Label^ lb_titulodos;
 	private: System::Windows::Forms::Label^ linea;
@@ -86,8 +87,8 @@ namespace ProyectoMD {
 
 #pragma region Windows Form Designer generated code
 		   /// <summary>
-		   /// MÈtodo necesario para admitir el DiseÒador. No se puede modificar
-		   /// el contenido de este mÈtodo con el editor de cÛdigo.
+		   /// M√©todo necesario para admitir el Dise√±ador. No se puede modificar
+		   /// el contenido de este m√©todo con el editor de c√≥digo.
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
@@ -123,7 +124,7 @@ namespace ProyectoMD {
 			   this->lbl_numterm->Name = L"lbl_numterm";
 			   this->lbl_numterm->Size = System::Drawing::Size(228, 20);
 			   this->lbl_numterm->TabIndex = 1;
-			   this->lbl_numterm->Text = L"Ingrese el n˙mero de tÈrminos:";
+			   this->lbl_numterm->Text = L"Ingrese el n√∫mero de t√©rminos:";
 			   // 
 			   // rb_tres
 			   // 
@@ -169,8 +170,8 @@ namespace ProyectoMD {
 				   static_cast<System::Byte>(0)));
 			   this->cb_forma->FormattingEnabled = true;
 			   this->cb_forma->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				   L"ExpresiÛn LÛgica", L"Tabla de Verdad", L"Lista de MinitÈrminos",
-					   L"Lista de MaxitÈrminos"
+				   L"Expresi√≥n L√≥gica", L"Tabla de Verdad", L"Lista de Minit√©rminos",
+					   L"Lista de Maxit√©rminos"
 			   });
 			   this->cb_forma->Location = System::Drawing::Point(301, 98);
 			   this->cb_forma->Name = L"cb_forma";
@@ -276,7 +277,7 @@ namespace ProyectoMD {
 			lbl_minterminos->Size = System::Drawing::Size(340, 60);
 			lbl_minterminos->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			lbl_minterminos->Text = "Ingrese minitÈrminos separados por comas (ej. 0, 2, 5, 7):";
+			lbl_minterminos->Text = "Ingrese minit√©rminos separados por comas (ej. 0, 2, 5, 7):";
 			Controls->Add(lbl_minterminos);
 		}
 
@@ -315,7 +316,7 @@ namespace ProyectoMD {
 			lbl_maxterminos->Size = System::Drawing::Size(340, 60);
 			lbl_maxterminos->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			lbl_maxterminos->Text = "Ingrese maxitÈrminos separados por comas (ej. 1, 3, 4, 6):";
+			lbl_maxterminos->Text = "Ingrese maxit√©rminos separados por comas (ej. 1, 3, 4, 6):";
 			Controls->Add(lbl_maxterminos);
 		}
 
@@ -353,7 +354,7 @@ namespace ProyectoMD {
 			lbl_expresion = gcnew System::Windows::Forms::Label();
 			lbl_expresion->Location = System::Drawing::Point(80, 180);
 			lbl_expresion->Size = System::Drawing::Size(320, 30);
-			lbl_expresion->Text = "Ingrese la expresiÛn (ejemplo: A'B + CD):";
+			lbl_expresion->Text = "Ingrese la expresi√≥n (ejemplo: A'B + CD):";
 			lbl_expresion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			Controls->Add(lbl_expresion);
@@ -465,7 +466,7 @@ namespace ProyectoMD {
 		if (dgv_tabla == nullptr) {
 			dgv_tabla = gcnew System::Windows::Forms::DataGridView();
 
-			// inicializaciÛn
+			// inicializaci√≥n
 			dgv_tabla->Location = System::Drawing::Point(80, 180);
 			dgv_tabla->Size = System::Drawing::Size(340, 250);
 			dgv_tabla->AllowUserToAddRows = false;
@@ -490,7 +491,7 @@ namespace ProyectoMD {
 			dgv_tabla->Columns[v]->ReadOnly = true;
 		}
 
-		// columna de salida (valor de la expresiÛn)
+		// columna de salida (valor de la expresi√≥n)
 		dgv_tabla->Columns->Add("F", "Salida (F)");
 		dgv_tabla->Columns[numeroTerminos]->ReadOnly = false;
 
@@ -500,10 +501,10 @@ namespace ProyectoMD {
 			int index = dgv_tabla->Rows->Add();
 
 			// Llena las filas. Para llenar una tabla de verdad, se
-			// cuenta del 0 hasta 2^n - 1, y ese n˙mero se transfor
-			// ma hacia la base 2 (binaria). Esto se podrÌa hacer
+			// cuenta del 0 hasta 2^n - 1, y ese n√∫mero se transfor
+			// ma hacia la base 2 (binaria). Esto se podr√≠a hacer
 			// transformando "v" de la base diez hacia la base
-			// dos con divisiones y residuos; pero es m·s f·cil
+			// dos con divisiones y residuos; pero es m√°s f√°cil
 			// hacerlo con bits.
 			for (int v = 0; v < numeroTerminos; v++) {
 				int bit = (i >> (numeroTerminos - 1 - v)) & 1;
@@ -594,7 +595,7 @@ namespace ProyectoMD {
 			}
 		}
 		else if (numeroTerminos == 3) {
-			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (CÛdigo Gray)";
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (C√≥digo Gray)";
 			array<String^>^ cols = { "00", "01", "11", "10" };
 			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
 
@@ -613,7 +614,7 @@ namespace ProyectoMD {
 			}
 		}
 		else if (numeroTerminos == 4) {
-			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (CÛdigo Gray)";
+			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (C√≥digo Gray)";
 			array<String^>^ cols = { "00", "01", "11", "10" };
 			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
 
@@ -646,21 +647,91 @@ namespace ProyectoMD {
 
 		for (int v = 0; v < numVars; v++) {
 			String^ nombreVar = vars[v];
-			// transforma el n˙mero de la casilla a la base dos
+			// transforma el n√∫mero de la casilla a la base dos
 			int bit = (indiceCasilla >> (numVars - 1 - v)) & 1;
 
-			// 1. Si el tÈrmino pide la variable negada (ej. A' o !A)
+			// 1. Si el t√©rmino pide la variable negada (ej. A' o !A)
 			if (termino->Contains(nombreVar + "'") || termino->Contains("!" + nombreVar)) {
 				if (bit != 0) return false; // Si en la casilla no es 0, no cumple
 			}
-			// 2. Si el tÈrmino pide la variable afirmada (ej. A)
+			// 2. Si el t√©rmino pide la variable afirmada (ej. A)
 			else if (termino->Contains(nombreVar)) {
 				if (bit != 1) return false; // Si en la casilla no es 1, no cumple
 			}
-			// 3. Si no contiene la variable, se ignora (no impone condiciÛn)
+			// 3. Si no contiene la variable, se ignora (no impone condici√≥n)
 		}
 
-		return true; // CumpliÛ todas las condiciones del tÈrmino
+		return true; // Cumpli√≥ todas las condiciones del t√©rmino
+	}
+
+	private: String^ expandirParentesis(String^ expr) {
+		while (expr->Contains("(")) {
+			// 1) par√©ntesis m√°s interno
+			int abre = expr->LastIndexOf('(');
+			int cierra = expr->IndexOf(')', abre);
+			String^ interior = expr->Substring(abre + 1, cierra - abre - 1);
+
+			// 2) negaciones alrededor del grupo: '!' antes, ' despu√©s
+			bool negar = false;
+			int iniIzq = abre;
+			while (iniIzq > 0 && expr[iniIzq - 1] == L'!') { negar = !negar; iniIzq--; }
+			int finDer = cierra;
+			while (finDer + 1 < expr->Length && expr[finDer + 1] == L'\'') { negar = !negar; finDer++; }
+
+			// 3) contexto: los factores "pegados" al par√©ntesis (se repiten en cada t√©rmino)
+			String^ izq = "";
+			int i = iniIzq - 1;
+			while (i >= 0 && expr[i] != L'+' && expr[i] != L'(' && expr[i] != L')') {
+				izq = expr->Substring(i, 1) + izq;
+				i--;
+			}
+			String^ der = "";
+			int j = finDer + 1;
+			while (j < expr->Length && expr[j] != L'+' && expr[j] != L'(' && expr[j] != L')') {
+				der += expr->Substring(j, 1);
+				j++;
+			}
+
+			// 4) distribuir
+			String^ reemplazo = "";
+			if (!negar) {
+				// X(Y+Z)W  ‚Üí  XYW + XZW
+				array<String^>^ terminos = interior->Split('+');
+				for each (String ^ t in terminos) {
+					if (reemplazo != "") reemplazo += "+";
+					reemplazo += izq + t + der;
+				}
+			}
+			else if (interior->Contains("+")) {
+				// De Morgan: (X+Y)' = X'Y'  ‚Üí  concatenar t√©rminos negados
+				array<String^>^ terminos = interior->Split('+');
+				for each (String ^ t in terminos)
+					reemplazo += izq + t + "'" + der;
+			}
+			else {
+				// De Morgan: (XY)' = X' + Y'  ‚Üí  separar factores y negar cada uno
+				String^ factor = "";
+				for (int k = 0; k < interior->Length; k++) {
+					if (interior[k] == L'\'') factor += "'";
+					else {
+						if (factor != "") {
+							if (reemplazo != "") reemplazo += "+";
+							reemplazo += izq + factor + "'" + der;
+						}
+						factor = interior->Substring(k, 1);
+					}
+				}
+				if (factor != "") {
+					if (reemplazo != "") reemplazo += "+";
+					reemplazo += izq + factor + "'" + der;
+				}
+			}
+
+			// 5) reensamblar y limpiar dobles negaciones ((A')' ‚Üí A'' ‚Üí A)
+			expr = expr->Substring(0, i + 1) + reemplazo + expr->Substring(j);
+			while (expr->Contains("''")) expr = expr->Replace("''", "");
+		}
+		return expr;
 	}
 
 	private: void construirKarnaughDesdeExpresion() {
@@ -668,6 +739,7 @@ namespace ProyectoMD {
 
 		// 1. limpieza del texto ingresado
 		String^ expr = txt_expresion->Text->Replace(" ", "")->ToUpper();
+		expr = expandirParentesis(expr);
 		array<String^>^ terminos = expr->Split('+');
 
 		// 2. evaluar cada casilla (del 0 al 2^n - 1)
@@ -678,13 +750,13 @@ namespace ProyectoMD {
 			valoresF[i] = 0; // Por defecto 0
 			for each(String ^ term in terminos) {
 				if (term->Trim()->Length > 0 && casillaCumpleTermino(i, numeroTerminos, term->Trim())) {
-					valoresF[i] = 1; // Si cumple al menos un tÈrmino, vale 1
+					valoresF[i] = 1; // Si cumple al menos un t√©rmino, vale 1
 					break;
 				}
 			}
 		}
 
-		// 3. configurar dgv_karnaugh si a˙n no fue creado
+		// 3. configurar dgv_karnaugh si a√∫n no fue creado
 		if (dgv_karnaugh == nullptr) {
 			dgv_karnaugh = gcnew DataGridView();
 			dgv_karnaugh->Location = System::Drawing::Point(510, 100);
@@ -715,7 +787,7 @@ namespace ProyectoMD {
 		dgv_karnaugh->Visible = true;
 		lbl_cabeceraKarnaugh->Visible = true;
 
-		// 4. ubicar los valores en la cuadrÌcula de Karnaugh (cÛdigo Gray)
+		// 4. ubicar los valores en la cuadr√≠cula de Karnaugh (c√≥digo Gray)
 		if (numeroTerminos == 2) {
 			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: B";
 			dgv_karnaugh->Columns->Add("B0", "B = 0");
@@ -736,7 +808,7 @@ namespace ProyectoMD {
 			}
 		}
 		else if (numeroTerminos == 3) {
-			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (CÛdigo Gray)";
+			lbl_cabeceraKarnaugh->Text = "Filas: A \\ Columnas: BC (C√≥digo Gray)";
 			array<String^>^ cols = { "00", "01", "11", "10" };
 			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
 
@@ -755,7 +827,7 @@ namespace ProyectoMD {
 			}
 		}
 		else if (numeroTerminos == 4) {
-			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (CÛdigo Gray)";
+			lbl_cabeceraKarnaugh->Text = "Filas: AB \\ Columnas: CD (C√≥digo Gray)";
 			array<String^>^ cols = { "00", "01", "11", "10" };
 			for (int c = 0; c < 4; c++) dgv_karnaugh->Columns->Add(cols[c], cols[c]);
 
@@ -828,7 +900,7 @@ namespace ProyectoMD {
 	private: void construirMapaKarnaugh(array<int>^ valoresF) {
 		if (numeroTerminos < 2) return;
 
-		// Crear DataGridView si todavÌa no existe
+		// Crear DataGridView si todav√≠a no existe
 		if (dgv_karnaugh == nullptr) {
 
 			dgv_karnaugh = gcnew DataGridView();
@@ -862,7 +934,7 @@ namespace ProyectoMD {
 			Controls->Add(dgv_karnaugh);
 		}
 
-		// crear encabezado si todavÌa no existe
+		// crear encabezado si todav√≠a no existe
 		if (lbl_cabeceraKarnaugh == nullptr) {
 
 			lbl_cabeceraKarnaugh = gcnew Label();
@@ -930,7 +1002,7 @@ namespace ProyectoMD {
 		else if (numeroTerminos == 3) {
 
 			lbl_cabeceraKarnaugh->Text =
-				"Filas: A \\ Columnas: BC (CÛdigo Gray)";
+				"Filas: A \\ Columnas: BC (C√≥digo Gray)";
 
 			array<String^>^ cols = {
 				"00", "01", "11", "10"
@@ -971,7 +1043,7 @@ namespace ProyectoMD {
 		else if (numeroTerminos == 4) {
 
 			lbl_cabeceraKarnaugh->Text =
-				"Filas: AB \\ Columnas: CD (CÛdigo Gray)";
+				"Filas: AB \\ Columnas: CD (C√≥digo Gray)";
 
 			array<String^>^ cols = {
 				"00", "01", "11", "10"
@@ -1057,7 +1129,7 @@ namespace ProyectoMD {
 			dgv_tabla->Rows[i]->Cells[numeroTerminos]->Value = 0;
 		}
 
-		// leer  minitÈrminos
+		// leer  minit√©rminos
 		array<String^>^ terminos =
 			txt_minterminos->Text->Split(',');
 
@@ -1112,7 +1184,7 @@ namespace ProyectoMD {
 			dgv_tabla->Rows[i]->Cells[numeroTerminos]->Value = 1;
 		}
 
-		// leer los maxitÈrminos
+		// leer los maxit√©rminos
 		array<String^>^ terminos =
 			txt_maxterminos->Text->Split(',');
 
@@ -1133,7 +1205,7 @@ namespace ProyectoMD {
 			return c;
 		}
 			    
-			   // Cubre todos los 1s eligiendo el grupo que m·s 1s pendientes cubre
+			   // Cubre todos los 1s eligiendo el grupo que m√°s 1s pendientes cubre
 	private: List<int>^ cubrirGrupos(List<int>^ grupos, int unosMascara) {
 		List<int>^ elegidos = gcnew List<int>();
 		int restantes = unosMascara;
@@ -1156,7 +1228,7 @@ namespace ProyectoMD {
 				}
 			}
 
-			if (mejorGrupo == -1) break; // no deberÌa pasar
+			if (mejorGrupo == -1) break; // no deber√≠a pasar
 
 			elegidos->Add(mejorGrupo);
 			restantes &= ~mejorGrupo;
@@ -1165,9 +1237,162 @@ namespace ProyectoMD {
 		return elegidos;
 	}
 
-		// convierte un grupo (m·scara de minitÈrminos) en su tÈrmino SOP
+	private: void obtenerDimensionesYMapa(int% filas, int% cols, array<array<int>^>^% mapa) {
+		if (numeroTerminos == 2) {
+			filas = 2; cols = 2;
+			mapa = gcnew array<array<int>^>{ gcnew array<int>{0, 1}, gcnew array<int>{2, 3} };
+		}
+		else if (numeroTerminos == 3) {
+			filas = 2; cols = 4;
+			mapa = gcnew array<array<int>^>{ gcnew array<int>{0, 1, 3, 2}, gcnew array<int>{4, 5, 7, 6} };
+		}
+		else {
+			filas = 4; cols = 4;
+			mapa = gcnew array<array<int>^>{
+				gcnew array<int>{ 0,  1,  3,  2 },
+				gcnew array<int>{ 4,  5,  7,  6 },
+				gcnew array<int>{12, 13, 15, 14 },
+				gcnew array<int>{ 8,  9, 11, 10 }
+			};
+		}
+	}
+
+	private: List<int>^ obtenerGruposElegidos(array<int>^ valoresF) {
+		int filas, cols;
+		array<array<int>^>^ mapa;
+		obtenerDimensionesYMapa(filas, cols, mapa);
+
+		int total = 1 << numeroTerminos;
+		int unosMascara = 0;
+		for (int i = 0; i < total; i++)
+			if (valoresF[i] == 1) unosMascara |= (1 << i);
+
+		if (unosMascara == 0 || unosMascara == (total - 1))
+			return gcnew List<int>();   // F = 0 o F = 1: sin grupos que pintar
+
+		// 1) enumerar grupos v√°lidos (potencias de 2, con envoltura)
+		array<int>^ alturas = (filas == 2) ? gcnew array<int>{1, 2} : gcnew array<int>{ 1, 2, 4 };
+		array<int>^ anchos = (cols == 2) ? gcnew array<int>{1, 2} : gcnew array<int>{ 1, 2, 4 };
+
+		List<int>^ grupos = gcnew List<int>();
+		HashSet<int>^ vistos = gcnew HashSet<int>();
+
+		for (int r0 = 0; r0 < filas; r0++)
+			for (int c0 = 0; c0 < cols; c0++)
+				for each(int h in alturas)
+					for each(int w in anchos) {
+						int mascara = 0;
+						for (int i = 0; i < h; i++)
+							for (int j = 0; j < w; j++) {
+								int r = (r0 + i) % filas;
+								int c = (c0 + j) % cols;
+								mascara |= (1 << mapa[r][c]);
+							}
+						if ((mascara & unosMascara) == mascara && !vistos->Contains(mascara)) {
+							vistos->Add(mascara);
+							grupos->Add(mascara);
+						}
+					}
+
+		// 2) implicantes primos
+		List<int>^ primos = gcnew List<int>();
+		for each(int g in grupos) {
+			bool contenido = false;
+			for each(int otro in grupos) {
+				if (otro != g && (otro & g) == g) { contenido = true; break; }
+			}
+			if (!contenido) primos->Add(g);
+		}
+
+		// 3) cubrir todos los 1s
+		return cubrirGrupos(primos, unosMascara);
+	}
+
+	private: String^ armarExpresion(List<int>^ elegidos) {
+		int filas, cols;
+		array<array<int>^>^ mapa;
+		obtenerDimensionesYMapa(filas, cols, mapa);
+
+		String^ resultado = "";
+		for each(int g in elegidos) {
+			String^ t = terminoDeGrupo(g, filas, cols, mapa);
+			if (t == "") t = "1";
+			if (resultado != "") resultado += " + ";
+			resultado += t;
+		}
+		return resultado;
+	}
+
+		private: void pintarGrupos(List<int>^ elegidos) {
+			// quitar leyenda anterior si existe
+			if (leyenda != nullptr) {
+				for each(Label ^ l in leyenda) Controls->Remove(l);
+				leyenda = nullptr;
+			}
+
+			if (dgv_karnaugh == nullptr) return;
+
+			int filas, cols;
+			array<array<int>^>^ mapa;
+			obtenerDimensionesYMapa(filas, cols, mapa);
+
+			// restaurar el mapa a blanco
+			for (int r = 0; r < filas; r++)
+				for (int c = 0; c < cols; c++)
+					dgv_karnaugh->Rows[r]->Cells[c]->Style->BackColor = Color::White;
+
+			if (elegidos == nullptr || elegidos->Count == 0) return;
+
+			// paleta: relleno claro para las celdas, tinta oscura para la leyenda
+			array<Color>^ relleno = { Color::MistyRose, Color::Honeydew, Color::LightSteelBlue, Color::LemonChiffon,
+				Color::Lavender, Color::PaleTurquoise, Color::Moccasin, Color::Thistle };
+			array<Color>^ tinta = { Color::Firebrick, Color::SeaGreen, Color::RoyalBlue, Color::DarkOrange,
+				Color::DarkViolet, Color::Teal, Color::SaddleBrown, Color::DarkMagenta };
+
+			// contar cu√°ntos grupos cubren cada celda
+			array<int>^ cubre = gcnew array<int>(filas * cols);
+			array<int>^ primero = gcnew array<int>(filas * cols);
+			for (int i = 0; i < filas * cols; i++) primero[i] = -1;
+
+			for (int gi = 0; gi < elegidos->Count; gi++) {
+				int g = elegidos[gi];
+				for (int r = 0; r < filas; r++)
+					for (int c = 0; c < cols; c++)
+						if ((g >> mapa[r][c]) & 1) {
+							cubre[r * cols + c]++;
+							if (primero[r * cols + c] == -1) primero[r * cols + c] = gi;
+						}
+			}
+
+			// pintar: 1 grupo ‚Üí su color; 2+ grupos ‚Üí gris (celda compartida)
+			for (int r = 0; r < filas; r++)
+				for (int c = 0; c < cols; c++) {
+					int celda = r * cols + c;
+					if (cubre[celda] == 1)
+						dgv_karnaugh->Rows[r]->Cells[c]->Style->BackColor =
+						relleno[primero[celda] % relleno->Length];
+					else if (cubre[celda] > 1)
+						dgv_karnaugh->Rows[r]->Cells[c]->Style->BackColor = Color::LightGray;
+				}
+
+			// leyenda: Grupo N (color) ‚Üí t√©rmino
+			leyenda = gcnew List<Label^>();
+			for (int gi = 0; gi < elegidos->Count; gi++) {
+				Label^ item = gcnew Label();
+				item->Location = System::Drawing::Point(510, 398 + gi * 20);
+				item->Size = System::Drawing::Size(470, 20);
+				item->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular));
+				item->Text = "Grupo " + (gi + 1) + ":  " + terminoDeGrupo(elegidos[gi], filas, cols, mapa);
+				item->ForeColor = tinta[gi % tinta->Length];
+				Controls->Add(item);
+				leyenda->Add(item);
+				item->BringToFront();
+			}
+		}
+
+		// convierte un grupo (m√°scara de minit√©rminos) en su t√©rmino SOP
 	private: String^ terminoDeGrupo(int mascara, int filas, int cols, array<array<int>^>^ mapa) {
-		// etiquetas y nombres de variables seg˙n la dimensiÛn
+		// etiquetas y nombres de variables seg√∫n la dimensi√≥n
 		array<String^>^ etqFilas;
 		array<String^>^ nomFilas;
 		if (numeroTerminos == 4) {
@@ -1192,7 +1417,7 @@ namespace ProyectoMD {
 			: gcnew array<String^>{ "C", "D" };
 		}
 
-		// Marcar quÈ filas y columnas cubre el grupo
+		// Marcar qu√© filas y columnas cubre el grupo
 		array<bool>^ usaFila = gcnew array<bool>(filas);
 		array<bool>^ usaCol = gcnew array<bool>(cols);
 		for (int r = 0; r < filas; r++)
@@ -1235,96 +1460,10 @@ namespace ProyectoMD {
 		return termino; // "" = el grupo cubre todo (F = 1)
 	}
 
-	private: String^ obtenerExpresionSimplificada(array<int>^ valoresF) {
-		int filas, cols;
-		if (numeroTerminos == 2) { filas = 2; cols = 2; }
-		else if (numeroTerminos == 3) { filas = 2; cols = 4; }
-		else { filas = 4; cols = 4; }
-
-		array<array<int>^>^ mapa;
-		if (numeroTerminos == 2) {
-			mapa = gcnew array<array<int>^>{ gcnew array<int>{0, 1}, gcnew array<int>{2, 3} };
-		}
-		else if (numeroTerminos == 3) {
-			mapa = gcnew array<array<int>^>{ gcnew array<int>{0, 1, 3, 2}, gcnew array<int>{4, 5, 7, 6} };
-		}
-		else {
-			mapa = gcnew array<array<int>^>{
-				gcnew array<int>{ 0,  1,  3,  2 },
-				gcnew array<int>{ 4,  5,  7,  6 },
-				gcnew array<int>{12, 13, 15, 14 },
-				gcnew array<int>{ 8,  9, 11, 10 }
-			};
-		}
-
-		int total = 1 << numeroTerminos;
-		int unosMascara = 0;
-		for (int i = 0; i < total; i++)
-			if (valoresF[i] == 1) unosMascara |= (1 << i);
-
-		if (unosMascara == 0) return "0";
-		if (unosMascara == (total - 1)) return "1";
-
-		// 1 enumerar todos los grupos rectangulares v·lidos (con envoltura)
-		array<int>^ alturas = (filas == 2) ? gcnew array<int>{1, 2} : gcnew array<int>{ 1, 2, 4 };
-		array<int>^ anchos = (cols == 2) ? gcnew array<int>{1, 2} : gcnew array<int>{ 1, 2, 4 };
-
-		List<int>^ grupos = gcnew List<int>();
-		System::Collections::Generic::HashSet<int>^ vistos = gcnew HashSet<int>();
-
-		for (int r0 = 0; r0 < filas; r0++)
-			for (int c0 = 0; c0 < cols; c0++)
-				for each(int h in alturas)
-					for each(int w in anchos) {
-						int mascara = 0;
-						for (int i = 0; i < h; i++)
-							for (int j = 0; j < w; j++) {
-								int r = (r0 + i) % filas;   // envoltura de filas
-								int c = (c0 + j) % cols;    // envoltura de columnas
-								mascara |= (1 << mapa[r][c]);
-							}
-						if ((mascara & unosMascara) == mascara && !vistos->Contains(mascara)) {
-							vistos->Add(mascara);
-							grupos->Add(mascara);
-						}
-					}
-
-		// 2 quedarse solo con implicantes primos
-		List<int>^ primos = gcnew List<int>();
-		for each(int g in grupos) {
-			bool contenido = false;
-			for each(int otro in grupos) {
-				if (otro != g && (otro & g) == g) { contenido = true; break; }
-			}
-			if (!contenido) primos->Add(g);
-		}
-
-		// 3 cubrir todos los 1s
-		List<int>^ elegidos = cubrirGrupos(primos, unosMascara);
-
-		// 4 armar la expresiÛn
-		String^ resultado = "";
-		for each(int g in elegidos) {
-			String^ t = terminoDeGrupo(g, filas, cols, mapa);
-			if (t == "") t = "1";
-			if (resultado != "") resultado += " + ";
-			resultado += t;
-		}
-
-		return resultado;
-	}
-
 	private: void mostrarResultado(array<int>^ valoresF) {
-		if (lbl_resultado == nullptr) {
-			lbl_resultado = gcnew Label();
-			lbl_resultado->Location = System::Drawing::Point(510, 375);
-			lbl_resultado->Size = System::Drawing::Size(470, 60);
-			lbl_resultado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold));
-			Controls->Add(lbl_resultado);
-		}
-		lbl_resultado->Text = "ExpresiÛn simplificada:  F = " + obtenerExpresionSimplificada(valoresF);
-		lbl_resultado->Visible = true;
-		lbl_resultado->BringToFront();
+		auto elegidos = obtenerGruposElegidos(valoresF);
+		armarExpresion(elegidos);
+		pintarGrupos(elegidos);
 	}
 
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
@@ -1345,7 +1484,7 @@ namespace ProyectoMD {
 		if (dgv_tabla != nullptr && dgv_tabla->Visible) generarTabla();
 	}
 	private: System::Void cb_forma_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-		if (cb_forma->SelectedItem->ToString() == "ExpresiÛn LÛgica") {
+		if (cb_forma->SelectedItem->ToString() == "Expresi√≥n L√≥gica") {
 			ocultarIngresos();
 			mostrarIngresoExpresion();
 		}
@@ -1354,11 +1493,11 @@ namespace ProyectoMD {
 			generarTabla();
 			dgv_tabla->BringToFront();
 		}
-		else if (cb_forma->SelectedItem->ToString() == "Lista de MinitÈrminos") {
+		else if (cb_forma->SelectedItem->ToString() == "Lista de Minit√©rminos") {
 			ocultarIngresos();
 			mostrarIngresoMinterminos();
 		}
-		else if (cb_forma->SelectedItem->ToString() == "Lista de MaxitÈrminos") {
+		else if (cb_forma->SelectedItem->ToString() == "Lista de Maxit√©rminos") {
 			ocultarIngresos();
 			mostrarIngresoMaxterminos();
 		}
